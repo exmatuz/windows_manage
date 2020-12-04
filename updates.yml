@@ -1,0 +1,18 @@
+---
+
+- hosts: windows
+  gather_facts: no
+  tasks:
+  - name: Install all security, critical and rollup updates
+    win_updates:
+     category_name:
+     - SecurityUpdates
+     - CriticalUpdates
+     - UpdateRollups
+     - Updates
+     reboot: yes
+
+  - name: Wait for systems to become reachable over WinRM
+    wait_for_connection:
+     timeout: 600
+

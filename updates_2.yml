@@ -1,0 +1,20 @@
+---
+
+- hosts: windows
+  gather_facts: no
+  tasks:
+  - name: Instalar lista de KB
+    win_updates:
+     category_name:
+     - SecurityUpdates
+     - CriticalUpdates
+     - UpdateRollups
+     - Updates
+     reboot: yes
+     blacklist:
+     - KB3172614
+
+  - name: Wait for systems to become reachable over WinRM
+    wait_for_connection:
+     timeout: 600
+
